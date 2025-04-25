@@ -11,6 +11,7 @@ import { MaterialModule } from './material/material.module';
 import { LoginComponent } from './components/login/login.component';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,8 @@ import { FormsModule } from '@angular/forms';
     AngularFirestoreModule,
     MaterialModule,
     CommonModule,
+    AngularFireAuthModule,
+    MaterialModule,
     FormsModule
   ],
   providers: [],
