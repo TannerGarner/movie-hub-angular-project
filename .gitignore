@@ -43,3 +43,4 @@ Thumbs.db
 
 /src/environments/**/*.ts
 firebase.environment.ts
+/src/api-tests/

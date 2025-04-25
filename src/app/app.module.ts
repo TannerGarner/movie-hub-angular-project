@@ -8,6 +8,7 @@ import { firebaseConfig } from '../environments/firebase.environment';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { MaterialModule } from './material/material.module';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,9 @@ import { MaterialModule } from './material/material.module';
     AngularFirestoreModule,
     MaterialModule
   ],
-  providers: [],
+  providers: [
+    provideHttpClient(withInterceptorsFromDi())
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
