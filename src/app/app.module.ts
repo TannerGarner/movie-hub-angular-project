@@ -10,16 +10,18 @@ import { AppComponent } from './app.component';
 import { MaterialModule } from './material/material.module';
 import { LoginComponent } from './components/login/login.component';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 import { provideHttpClient } from '@angular/common/http';
 import { TmdbTestComponent } from './test/tmdb-test/tmdb-test.component';
+import { SearchBarComponent } from './components/search-bar/search-bar.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    TmdbTestComponent
+    TmdbTestComponent,
+    SearchBarComponent
   ],
   imports: [
     BrowserModule,
@@ -30,7 +32,8 @@ import { TmdbTestComponent } from './test/tmdb-test/tmdb-test.component';
     CommonModule,
     AngularFireAuthModule,
     MaterialModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [provideHttpClient()],
   bootstrap: [AppComponent]

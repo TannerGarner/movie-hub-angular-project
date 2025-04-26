@@ -1,20 +1,36 @@
-import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
-import { Injectable } from "@angular/core";
-import { Observable } from "rxjs";
-import { tmdbSecrets } from "../../environments/tmdb.environment";
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { tmdbSecrets } from '../../environments/tmdb.environment';
 
 @Injectable({
-  providedIn: "root"
+  providedIn: 'root'
 })
 export class TmdbService {
-  private baseApiUrl: string = "https://api.themoviedb.org/3";
+  private baseApiUrl: string = 'https://api.themoviedb.org/3';
 
-  constructor(private http: HttpClient) { }
+  constructor(public http: HttpClient) { }
 
-  searchMovies(query: string): Observable<any> {
-    const params = new HttpParams().set("query", query);
-    const headers = new HttpHeaders().set("Authorization", `Bearer ${tmdbSecrets.accessToken}`);
+  searchMoviesByTitle(query: string | null): Observable<any> {
+    if (query) {
+      const params = new HttpParams()
+        .set('api_key', tmdbSecrets.apiKey)
+        .set('query', query);
 
-    return this.http.get(`${this.baseApiUrl}/search/movie`, { params, headers });
+      return this.http.get(`${this.baseApiUrl}/search/movie`, { params });
+    }
+    else {
+      const params = new HttpParams()
+        .set('api_key', tmdbSecrets.apiKey);
+
+      return this.http.get(`${this.baseApiUrl}/movie/popular`, { params });
+    }
+  }
+
+  getMovieById(id: number) {
+    const params = new HttpParams()
+      .set('api_key', tmdbSecrets.apiKey);
+
+    return this.http.get(`${this.baseApiUrl}/movie/${id}`, { params });
   }
 }
