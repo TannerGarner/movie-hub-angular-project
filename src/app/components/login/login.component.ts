@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -12,9 +12,25 @@ export class LoginComponent {
     username: '',
     password: ''
   }
+  authService: AuthService;
+
+  constructor(private auth: AuthService) {
+    this.authService = auth;
+  }
+
+  ngOnInit() {
+    
+  }
 
   login() {
     if (this.userLogin.username && this.userLogin.password) {
-      console.log('Login clicked', this.userLogin);
-    }  }
+      this.authService.login(this.userLogin.username, this.userLogin.password)
+        .then(() => {
+          alert('Login successful!');
+        })
+        .catch((error) => {
+          alert(`Login Failed: ${error}`);
+        });
+    }  
+  }
 }
