@@ -13,6 +13,8 @@ export class LoginComponent {
     username: '',
     password: ''
   }
+
+  token: string | null = null;
   authService: AuthService;
   router: Router;
   constructor(router: Router, auth: AuthService) {
@@ -35,5 +37,9 @@ export class LoginComponent {
           alert(`Login Failed: ${error}`);
         });
     }  
+    this.authService.getIdToken().subscribe(token => {
+      this.token = token;
+      console.log('User token: ', token);
+    })
   }
 }
