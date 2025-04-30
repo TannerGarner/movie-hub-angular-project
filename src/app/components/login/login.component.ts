@@ -39,7 +39,11 @@ export class LoginComponent {
     }  
     this.authService.getIdToken().subscribe(token => {
       this.token = token;
-      console.log('User token: ', token);
+      if (token) {
+        localStorage.setItem('token', token);
+      } else {
+        localStorage.removeItem('token');
+      }
     })
   }
 }
