@@ -43,4 +43,5 @@ Thumbs.db
 
 /src/environments/
 firebase.environment.ts
+tmdb.environment.ts
 test/

@@ -13,14 +13,12 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 import { provideHttpClient } from '@angular/common/http';
-import { TmdbTestComponent } from './test/tmdb-test/tmdb-test.component';
 import { SearchBarComponent } from './components/search-bar/search-bar.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    TmdbTestComponent,
     SearchBarComponent
   ],
   imports: [
