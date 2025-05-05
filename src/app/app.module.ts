@@ -19,6 +19,7 @@ import { SearchPageComponent } from './components/search-page/search-page.compon
 import { MovieDetailsPageComponent } from './components/movie-details-page/movie-details-page.component';
 import { SafeUrlPipe } from './pipes/safe-url.pipe';
 import { TextFieldModule } from '@angular/cdk/text-field';
+import { RegisterComponent } from './register/register.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { TextFieldModule } from '@angular/cdk/text-field';
     SearchBarComponent,
     SearchPageComponent,
     MovieDetailsPageComponent,
-    SafeUrlPipe
+    SafeUrlPipe,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,
@@ -42,8 +44,11 @@ import { TextFieldModule } from '@angular/cdk/text-field';
     FormsModule,
     ReactiveFormsModule,
     TextFieldModule,
+    ReactiveFormsModule
   ],
-  providers: [provideHttpClient()],
+  providers: [
+    provideHttpClient(withInterceptorsFromDi())
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
