@@ -10,14 +10,16 @@ import { AppComponent } from './app.component';
 import { MaterialModule } from './material/material.module';
 import { LoginComponent } from './components/login/login.component';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { RegisterComponent } from './register/register.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent
+    LoginComponent,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,
@@ -28,7 +30,8 @@ import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http'
     CommonModule,
     AngularFireAuthModule,
     MaterialModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [
     provideHttpClient(withInterceptorsFromDi())
