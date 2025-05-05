@@ -1,0 +1,151 @@
+.movie-details-page{
+    padding: 2rem 3rem;
+}
+
+.movie-content{
+    display: flex;
+    gap: 1rem;
+    padding: 2rem;
+}
+
+mat-card-content{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.media{
+    display: flex;
+    gap: 1rem;
+    width: 100%;
+    flex-wrap: wrap;
+}
+
+.movie-poster{
+    width: 30%;
+    flex-grow: 1;
+    border-radius: 15px;
+}
+
+.video-player{
+    width: 60%;
+    flex-grow: 2;
+    border-radius: 15px;
+}
+
+.movie-facts{
+    display: flex;
+}
+
+.movie-details-page {
+    .mat-icon {
+        font-family: 'Material Icons';
+        font-weight: normal;
+        font-style: normal;
+        font-size: 24px;
+        line-height: 1;
+        letter-spacing: normal;
+        text-transform: none;
+        display: inline-block;
+        white-space: nowrap;
+        word-wrap: normal;
+        direction: ltr;
+        -webkit-font-smoothing: antialiased;
+    }
+
+    .material-symbols-outlined {
+        font-family: 'Material Symbols Outlined';
+        font-weight: normal;
+        font-style: normal;
+        font-size: 24px;
+        line-height: 1;
+        letter-spacing: normal;
+        text-transform: none;
+        display: inline-block;
+        white-space: nowrap;
+        word-wrap: normal;
+        direction: ltr;
+        -webkit-font-smoothing: antialiased;
+    }
+
+    .movie-actions {
+        button {
+            width: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: start;
+            gap: 8px;
+            padding: 0 16px;
+            
+            mat-icon {
+                margin: 0;
+                font-size: 20px;
+                height: 20px;
+                width: 20px;
+                line-height: 20px;
+            }
+            
+            span {
+                margin-left: 4px;
+            }
+        }
+    }
+}
+
+.comment-section{
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-top: 2rem;
+    width: 100%;
+}
+
+.comment-input{
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    width: 100%;
+}
+
+.comment-actions {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 1rem;
+    width: 100%;
+}
+
+.card-list{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.small-card{
+    width: 15rem;
+    border-radius: 10px;
+    background-color: #f0f0f0;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease-in-out;
+}
+
+.small-card:hover{
+    cursor: pointer;
+    transform: scale(1.02);
+}
+
+.small-poster{
+    border-radius: 10px;
+}
+
+@media screen and (max-width: 1200px) {
+    .movie-content{
+        flex-direction: column;
+        gap: 2rem;
+    }
+
+    .movie-facts{
+        flex-direction: column;
+    }
+    
+}

@@ -15,13 +15,20 @@ import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { SignupComponent } from './components/signup/signup.component';
 import { SearchBarComponent } from './components/search-bar/search-bar.component';
+import { SearchPageComponent } from './components/search-page/search-page.component';
+import { MovieDetailsPageComponent } from './components/movie-details-page/movie-details-page.component';
+import { SafeUrlPipe } from './pipes/safe-url.pipe';
+import { TextFieldModule } from '@angular/cdk/text-field';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     SignupComponent,
-    SearchBarComponent
+    SearchBarComponent,
+    SearchPageComponent,
+    MovieDetailsPageComponent,
+    SafeUrlPipe
   ],
   imports: [
     BrowserModule,
@@ -33,7 +40,8 @@ import { SearchBarComponent } from './components/search-bar/search-bar.component
     AngularFireAuthModule,
     MaterialModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    TextFieldModule,
   ],
   providers: [provideHttpClient()],
   bootstrap: [AppComponent]

@@ -1,0 +1,94 @@
+<p>{{ movieDetails | json }}</p>
+
+<div class="container movie-details-page">
+    <mat-card class="movie-content" *ngIf="movieDetails">
+        <mat-card-header>
+            <mat-card-title>{{ movieDetails.title }}</mat-card-title>
+            <mat-card-subtitle>Release Date: {{ movieDetails.release_date | date }}</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+            <div class="media">
+                <img mat-card-image class="movie-poster" src="https://image.tmdb.org/t/p/original{{ movieDetails.poster_path }}" alt="{{ movieDetails.title }} poster">
+                <iframe *ngIf="youtubeURL" class="video-player" [src]="youtubeURL | safeUrl" frameborder="0"></iframe>
+            </div>
+            <div class="movie-facts">
+                <p>{{ movieDetails.overview }}</p>
+                <mat-list>
+                    <mat-list-item>
+                        <mat-icon matListItemIcon>schedule</mat-icon>
+                        <span matListItemTitle>Runtime: {{ movieDetails.runtime }} minutes</span>
+                    </mat-list-item>
+                    <mat-list-item>
+                        <mat-icon matListItemIcon>star_rate</mat-icon>
+                        <span matListItemTitle>Rating: {{ movieDetails.vote_average }}</span>
+                    </mat-list-item>
+                    <mat-list-item>
+                        <mat-icon matListItemIcon>language</mat-icon>
+                        <span matListItemTitle>Language: {{ movieDetails.original_language }}</span>
+                    </mat-list-item>
+                </mat-list>
+                <mat-list class="movie-actions">
+                    <mat-list-item>
+                        <button mat-flat-button color="primary">
+                            <mat-icon>add</mat-icon>
+                            <span>Add to Watchlist</span>
+                        </button>
+                    </mat-list-item>
+                    <mat-list-item>
+                        <button mat-flat-button color="accent">
+                            <mat-icon>check</mat-icon>
+                            <span>Mark as Watched</span>
+                        </button>
+                    </mat-list-item>
+                    <mat-list-item>
+                        <button mat-flat-button>
+                            <mat-icon>star_rate</mat-icon>
+                            <span>Rate Movie</span>
+                        </button>
+                    </mat-list-item>
+                </mat-list>
+            </div>
+            <div class="comment-section">
+                <h3>{{comments.length}} Comments</h3>
+                <mat-form-field appearance="outline" class="comment-input">
+                    <mat-label>Comment</mat-label>
+                    <textarea 
+                        matInput
+                        placeholder="Add a comment..."
+                        cdkTextareaAutosize
+                        #autosize="cdkTextareaAutosize"
+                        cdkAutosizeMinRows="1"
+                        cdkAutosizeMaxRows="5"
+                        [(ngModel)]="comment"
+                        (keyup.enter)="addComment()"
+                        (keyup.esc)="comment = ''">
+                    </textarea>       
+                </mat-form-field>
+                <div class="comment-actions">
+                    <button mat-button color="primary" (click)=" comment = '' " >Cancel</button>
+                    <button mat-raised-button color="primary" (click)="addComment()" >Comment</button>
+                </div>
+                <mat-list>
+                    <mat-list-item *ngFor="let comment of comments">
+                        <mat-icon matListItemIcon>comment</mat-icon>
+                        <span matListItemTitle>{{ comment }}</span>
+                    </mat-list-item>
+                </mat-list>
+                <div class="collection" *ngIf="collection">
+                    <h3>More in this Series</h3>
+                    <div class="card-list">
+                        <mat-card class="small-card" *ngFor="let movie of collection.parts" (click)="goToMovieDetails(movie.id)">
+                            <img class="small-poster" src="https://image.tmdb.org/t/p/original{{ movie.poster_path }}" alt="{{ movie.title }} poster">
+                            <mat-card-header>
+                                <mat-card-title>{{ movie.title }}</mat-card-title>
+                            </mat-card-header>
+                            <mat-card-content>
+                                Release Date: {{ movie.release_date | date }}
+                            </mat-card-content>
+                        </mat-card>
+                    </div>
+                </div>
+            </div>
+        </mat-card-content>
+    </mat-card>
+</div>
