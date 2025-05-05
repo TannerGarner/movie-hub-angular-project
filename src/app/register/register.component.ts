@@ -36,4 +36,13 @@ export class RegisterComponent {
         });
     }
   }
+
+  testRegister() {
+    const email = 'testuser1@example.com';
+    const password = 'testpassword';
+
+    this.authService.register(email, password)
+      .then(() => console.log('User registered successfully'))
+      .catch(err => console.error('Error during registration: ', err))
+  }
 }
