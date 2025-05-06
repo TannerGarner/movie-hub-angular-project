@@ -19,7 +19,9 @@ import { SearchPageComponent } from './components/search-page/search-page.compon
 import { MovieDetailsPageComponent } from './components/movie-details-page/movie-details-page.component';
 import { SafeUrlPipe } from './pipes/safe-url.pipe';
 import { TextFieldModule } from '@angular/cdk/text-field';
-import { RegisterComponent } from './register/register.component';
+import { HasWatchedComponent } from './components/has-watched/has-watched.component';
+import { WatchlistComponent } from './components/watchlist/watchlist.component';
+import { RegisterComponent } from './components/register/register.component';
 
 @NgModule({
   declarations: [
@@ -30,6 +32,8 @@ import { RegisterComponent } from './register/register.component';
     SearchPageComponent,
     MovieDetailsPageComponent,
     SafeUrlPipe,
+    HasWatchedComponent,
+    WatchlistComponent,
     RegisterComponent
   ],
   imports: [

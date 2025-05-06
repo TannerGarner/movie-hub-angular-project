@@ -20,7 +20,7 @@ import { MatListModule } from '@angular/material/list';
     MatInputModule,
     MatFormFieldModule,
     MatSnackBarModule,
-    MatListModule
+    MatListModule,
   ],
   exports: [
     MatButtonModule,

@@ -6,6 +6,7 @@ import { from, Observable } from 'rxjs';
 @Injectable({ providedIn: 'root' })
 export class AuthService {
 
+  private environmentInjector = inject(EnvironmentInjector);
   constructor(
     private afAuth: AngularFireAuth,
     private afs: AngularFirestore
@@ -15,16 +16,20 @@ export class AuthService {
     return this.afAuth.signInWithEmailAndPassword(email, password);
   }
 
-  register(email: string, password: string) {
+  register(username: string, password: string, email: string) {
       return this.afAuth.createUserWithEmailAndPassword(email, password)
       .then(cred => {
         const uid = cred.user?.uid;
         if (uid) {
-          return this.afs.collection('users').doc(uid).set({
-            email: email,
-            createdAt: new Date(),
-            role: 'user'  // or whatever default data you want
-          });
+          return runInInjectionContext(this.environmentInjector, () => {
+            return this.afs.collection('users').doc(uid).set({
+              username: username,
+              email: email,
+              createdAt: new Date(),
+              role: 'user'
+            });
+          })
+          
         } else {
           return Promise.reject('No UID found')
         }
