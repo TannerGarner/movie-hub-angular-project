@@ -1,1 +1,27 @@
-<p>search-page works!</p>
+<h1>Browse all Movies</h1>
+
+<div class="search-bar">
+    <input [formControl]="searchControl">
+</div>
+
+<div *ngIf="(searchResults$ | async)?.results as movies">
+    <div *ngIf="movies.length > 0; else noResults">
+        <mat-card *ngFor="let movie of movies">
+            <mat-card-header>
+                <mat-card-title>{{ movie.title }}</mat-card-title>
+                <mat-card-subtitle>{{ movie.release_date | date:'MMMM d, y' }}</mat-card-subtitle>
+                <div class="rating">Rating: {{ movie.vote_average }} / 10</div>
+            </mat-card-header>
+            <mat-card-content>
+                <img [src]="`https://image.tmdb.org/t/p/original/${movie.poster_path}`"
+                     [alt]="movie.title">
+                <div>
+                    <p>{{ movie.overview }}</p>
+                </div>
+            </mat-card-content>
+        </mat-card>
+    </div>
+    <ng-template #noResults>
+        <p>No movies found</p>
+    </ng-template>
+</div>

@@ -8,7 +8,7 @@ import { TmdbVideoResponse } from '../interfaces/tmdb-video.interface';
   providedIn: 'root'
 })
 export class TmdbService {
-  private baseApiUrl: string = 'https://api.themoviedb.org/3';
+  public baseApiUrl: string = 'https://api.themoviedb.org/3';
 
   constructor(public http: HttpClient) { }
 
@@ -17,13 +17,11 @@ export class TmdbService {
       const params = new HttpParams()
         .set('api_key', tmdbSecrets.apiKey)
         .set('query', query);
-
       return this.http.get(`${this.baseApiUrl}/search/movie`, { params });
     }
     else {
       const params = new HttpParams()
         .set('api_key', tmdbSecrets.apiKey);
-
       return this.http.get(`${this.baseApiUrl}/movie/popular`, { params });
     }
   }
@@ -31,7 +29,6 @@ export class TmdbService {
   getMovieById(id: number) {
     const params = new HttpParams()
       .set('api_key', tmdbSecrets.apiKey);
-
     return this.http.get(`${this.baseApiUrl}/movie/${id}`, { params });
   }
 

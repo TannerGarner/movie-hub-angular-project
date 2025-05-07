@@ -1,4 +1,7 @@
 import { Component } from '@angular/core';
+import { debounceTime, Observable, startWith, switchMap } from 'rxjs';
+import { TmdbService } from '../../services/tmdb.service';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-search-page',
@@ -7,5 +10,14 @@ import { Component } from '@angular/core';
   styleUrl: './search-page.component.scss'
 })
 export class SearchPageComponent {
+  public searchControl = new FormControl('');
+  public searchResults$: Observable<any>;
 
+  constructor(private tmdbService: TmdbService) {
+    this.searchResults$ = this.searchControl.valueChanges.pipe(
+      startWith(''),
+      debounceTime(300),
+      switchMap((searchQuery: string | null) => this.tmdbService.searchMoviesByTitle(searchQuery))
+    );
+  }
 }

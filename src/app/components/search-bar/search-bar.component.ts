@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
-import { debounceTime, Observable, switchMap, tap } from 'rxjs';
+import { debounceTime, Observable, startWith, switchMap, tap } from 'rxjs';
 import { TmdbService } from '../../services/tmdb.service';
 
 @Component({
@@ -15,6 +15,7 @@ export class SearchBarComponent {
 
   constructor(private tmdbService: TmdbService) {
     this.searchResults$ = this.searchControl.valueChanges.pipe(
+      startWith(''),
       debounceTime(300),
       switchMap((searchQuery: string | null) => this.tmdbService.searchMoviesByTitle(searchQuery))
     );
