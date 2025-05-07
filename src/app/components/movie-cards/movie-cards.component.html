@@ -11,6 +11,4 @@
         </mat-card>
     </div>
 </div>
-<div *ngIf="!movies.length">
-    There are no movies.
-</div>
+<div *ngIf="!movies?.length">{{ noMoviesMsg }}</div>

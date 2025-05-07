@@ -9,4 +9,5 @@ import { Movie } from '../../interfaces/movie';
 })
 export class MovieCardsComponent {
   @Input() movies: Movie[] = [];
+  @Input() noMoviesMsg: string = "No movies found.";
 }

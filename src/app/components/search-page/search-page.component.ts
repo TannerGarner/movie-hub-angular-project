@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { debounceTime, Observable, startWith, switchMap } from 'rxjs';
+import { debounceTime, map, Observable, startWith, switchMap } from 'rxjs';
 import { TmdbService } from '../../services/tmdb.service';
 import { FormControl } from '@angular/forms';
 
@@ -17,7 +17,8 @@ export class SearchPageComponent {
     this.searchResults$ = this.searchControl.valueChanges.pipe(
       startWith(''),
       debounceTime(300),
-      switchMap((searchQuery: string | null) => this.tmdbService.searchMoviesByTitle(searchQuery))
+      switchMap((searchQuery: string | null) => this.tmdbService.searchMoviesByTitle(searchQuery)),
+      map((searchRes: any) => searchRes.results)
     );
   }
 }

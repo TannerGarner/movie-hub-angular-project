@@ -6,4 +6,5 @@
            placeholder="Search for movies...">
 </div>
 
-<app-movie-cards [movies]="(searchResults$ | async)?.results"/>
+<app-movie-cards [movies]="searchResults$ | async"
+                 [noMoviesMsg]="`There are no search results for “${searchControl.value}”.`"/>
