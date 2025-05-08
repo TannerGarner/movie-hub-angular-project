@@ -75,19 +75,6 @@
                 <div class="collection" *ngIf="collection && collection.parts.length > 0">
                     <h3>More in this Series</h3>
                     <app-movie-cards [movies]="collection.parts" />
-                    <!--
-                    <div class="card-list">
-                        <mat-card class="small-card" *ngFor="let movie of collection.parts" (click)="goToMovieDetails(movie.id)">
-                            <img class="small-poster" src="https://image.tmdb.org/t/p/original{{ movie.poster_path }}" alt="{{ movie.title }} poster">
-                            <mat-card-header>
-                                <mat-card-title>{{ movie.title }}</mat-card-title>
-                            </mat-card-header>
-                            <mat-card-content>
-                                Release Date: {{ movie.release_date | date }}
-                            </mat-card-content>
-                        </mat-card>
-                    </div>
-                    -->
                 </div>
             </div>
         </mat-card-content>

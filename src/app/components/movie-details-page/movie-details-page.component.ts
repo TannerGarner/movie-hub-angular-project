@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { TmdbService } from '../../services/tmdb.service';
 import { JsonPipe, DatePipe } from '@angular/common';
 import { TmdbVideo, TmdbVideoResponse } from '../../interfaces/tmdb-video.interface';
@@ -18,15 +18,11 @@ export class MovieDetailsPageComponent implements OnInit {
   comments: string[] = [];
   movieId: number = 0;
   collection: any = null;
-  router: Router;
 
   constructor(
     private route: ActivatedRoute,
-    private tmdbService: TmdbService,
-    router: Router
-  ) {
-    this.router = router;
-  }
+    private tmdbService: TmdbService
+  ) { }
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
@@ -67,10 +63,5 @@ export class MovieDetailsPageComponent implements OnInit {
       this.comments.push(this.comment);
       this.comment = '';
     }
-  }
-
-  goToMovieDetails(movieId: number) {
-    this.router.navigate(['/movie', movieId]);
-    window.scrollTo(0, 0);    
   }
 }
