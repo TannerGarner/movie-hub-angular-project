@@ -11,10 +11,10 @@ import { TmdbService } from '../../services/tmdb.service';
 })
 export class SearchBarComponent {
   public searchControl = new FormControl('');
-  public searchResults$: Observable<any>;
+  public searchRes$: Observable<any>;
 
   constructor(private tmdbService: TmdbService) {
-    this.searchResults$ = this.searchControl.valueChanges.pipe(
+    this.searchRes$ = this.searchControl.valueChanges.pipe(
       startWith(''),
       debounceTime(300),
       switchMap((searchQuery: string | null) => this.tmdbService.searchMoviesByTitle(searchQuery))

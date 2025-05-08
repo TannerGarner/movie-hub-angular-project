@@ -26,6 +26,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
 import { MovieCardsComponent } from './components/movie-cards/movie-cards.component';
 import { ImageUrlPipe } from './pipes/image-url.pipe';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 @NgModule({
   declarations: [
@@ -56,7 +57,8 @@ import { ImageUrlPipe } from './pipes/image-url.pipe';
     TextFieldModule,
     ReactiveFormsModule,
     MatIconModule,
-    MatCardModule
+    MatCardModule,
+    MatPaginatorModule
   ],
   providers: [
     provideHttpClient(withInterceptorsFromDi())

@@ -6,7 +6,7 @@ div.search-bar {
     display: flex;
     align-items: center;
     width: 60vw;
-    margin: 0 auto;
+    margin: 0 auto 2rem auto;
     min-width: 18rem;
     position: relative;
     
@@ -51,38 +51,14 @@ mat-card-header {
     }
 }
 
-// div.movies-container {
-//     display: grid;
-//     grid-template-columns: 200px 1fr 1fr;
-//     // gap: 1rem;
-//     // padding: 1rem;
-    
-//     // Two columns for medium screens:
-//     @media screen and (min-width: 768px) {
-//         grid-template-columns: repeat(2, 1fr);
-//     }
-    
-//     // Three columns for large screens:
-//     @media screen and (min-width: 1200px) {
-//         grid-template-columns: repeat(3, 1fr);
-//     }
-// }
-
 mat-card-content {
     display: flex;
     flex-direction: row;
     margin: 1rem 0 0 0;
 
-    p {        
+    p {
+        font-size: 1rem;
         margin: 0 1rem;
         text-align: justify;
-
-        font-size: 1rem;
-        // @media screen and (min-width: 400px) {
-        //     font-size: 1.3rem;
-        // }
-        // @media screen and (min-width: 800px) {
-        //     font-size: 1.6rem;
-        // }
     }
 }

@@ -6,5 +6,13 @@
            placeholder="Search for movies...">
 </div>
 
-<app-movie-cards [movies]="searchResults$ | async"
-                 [noMoviesMsg]="`There are no search results for “${searchControl.value}”.`"/>
+<div *ngIf="searchRes$ | async as searchRes">
+    <app-movie-cards [movies]="searchRes.results"
+                     [noMoviesMsg]="`There are no search results for “${searchControl.value}”.`" />
+
+    <mat-paginator *ngIf="searchRes.total_pages > 1"
+                   [length]="searchRes.total_results"
+                   [pageSize]="20"
+                   (page)="handlePageEvent($event)"
+                   aria-label="Select page" />
+</div>
