@@ -34,7 +34,7 @@ import { RegisterComponent } from './components/register/register.component';
     SafeUrlPipe,
     HasWatchedComponent,
     WatchlistComponent,
-    RegisterComponent
+    RegisterComponent,
   ],
   imports: [
     BrowserModule,

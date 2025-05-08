@@ -12,8 +12,28 @@ export class AuthService {
     private afs: AngularFirestore
   ) {}
 
-  login(email: string, password: string) {
-    return this.afAuth.signInWithEmailAndPassword(email, password);
+  login(email: string, password: string): Promise<any> {
+    return this.afAuth.signInWithEmailAndPassword(email, password)
+      .then(cred => {
+        const uid = cred.user?.uid;
+        if(!uid) throw new Error('User UID not found')
+
+        localStorage.setItem('userId', uid)
+
+        return runInInjectionContext(this.environmentInjector, () => {
+          return this.afs.collection('users').doc(uid).get().toPromise()
+          .then(doc => {
+            if (doc?.exists) {
+              // const userData = doc.data();
+              // localStorage.setItem('user', JSON.stringify(userData));
+              // return userData;
+              return doc.data();
+            } else {
+              throw new Error('User data not found in firestore')
+            }
+          })
+        })
+      })
   }
 
   register(username: string, password: string, email: string) {
