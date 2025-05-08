@@ -18,12 +18,14 @@ export class MovieDetailsPageComponent implements OnInit, OnDestroy {
   public movieDetails: any = null;
   youtubeURL: string = '';
   comment: string = '';
-  comments: string[] = [];
+  comments: any[] = [];
   movieId: number = 0;
   collection: any = null;
   router: Router;
   watchData$: Observable<any[]>;
   private watchDataSubscription: Subscription | undefined;
+  comments$: Observable<any[]> = new Observable<any[]>();
+  private commentsSubscription: Subscription | undefined;
   hasWatched: boolean = false;
 
   constructor(
@@ -41,12 +43,16 @@ export class MovieDetailsPageComponent implements OnInit, OnDestroy {
       this.movieId = +params['id'];
       this.loadMovieDetails();
       this.setupWatchDataSubscription();
+      this.setupCommentsSubscription();
     });
   }
 
   ngOnDestroy(): void {
     if (this.watchDataSubscription) {
       this.watchDataSubscription.unsubscribe();
+    }
+    if (this.commentsSubscription) {
+      this.commentsSubscription.unsubscribe();
     }
   }
 
@@ -56,6 +62,13 @@ export class MovieDetailsPageComponent implements OnInit, OnDestroy {
         const movieWatch = data.find(item => item.movieID === this.movieId);
         this.hasWatched = movieWatch?.hasWatched || false;
       }
+    });
+  }
+
+  private setupCommentsSubscription(): void {
+    this.comments$ = this.firestoreService.getAllComments(this.movieId);
+    this.commentsSubscription = this.comments$.subscribe(comments => {
+      this.comments = comments;
     });
   }
 
@@ -104,13 +117,29 @@ export class MovieDetailsPageComponent implements OnInit, OnDestroy {
     // });
   }
 
-
   addComment() {
-    if (this.comment) {
-      this.comments.push(this.comment);
-      this.comment = '';
+    if (this.comment.trim()) {
+      this.firestoreService.addComment(this.movieId, this.comment.trim())
+        .then(() => {
+          console.log('Comment added successfully');
+          this.comment = ''; // Clear input after successful submission
+        })
+        .catch((error) => {
+          console.error('Error adding comment:', error);
+        });
     }
   }
+
+  deleteComment(commentId: string) {
+    // this.firestoreService.deleteComment(commentId)
+    //   .then(() => {
+    //     console.log('Comment deleted successfully');
+    //   })
+    //   .catch((error) => {
+    //     console.error('Error deleting comment:', error);
+    //   });
+  }
+
 
   goToMovieDetails(movieId: number) {
     this.router.navigate(['/movie', movieId]);

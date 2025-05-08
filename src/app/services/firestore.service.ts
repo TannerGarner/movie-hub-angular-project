@@ -27,6 +27,33 @@ export class FirestoreService {
   //   return (watchlistRef)
   // } 
 
+  getAllComments(movieId: number): Observable<any[]> {
+    return runInInjectionContext(this.environmentInjector, () => {
+      if (!this.userId) {
+        throw new Error('User ID not found in localStorage');
+      }
+      return this.afs
+        .collection('comments', ref => ref.where('movieID', '==', movieId.toString()))
+        .valueChanges();
+    })
+  }
+
+  addComment(movieId: number, comment: string): Promise<any> {
+    return runInInjectionContext(this.environmentInjector, () => {
+      if (!this.userId) {
+        throw new Error('User ID not found in localStorage');
+      }
+      const commentData = {
+        movieID: movieId.toString(),
+        userID: this.userId,
+        text: comment,
+        date: new Date()
+      };
+      return this.afs.collection('comments').add(commentData);
+    })
+  }
+
+
   getWatchData(): Observable<any> {
     return runInInjectionContext(this.environmentInjector, () => {
       if (!this.userId) {
