@@ -29,8 +29,9 @@ export class HasWatchedComponent implements OnInit {
       data => {
         this.watchData = data;
 
-        const movieRequests = this.watchData.map(item => 
-          this.tmdbService.getMovieById(item.movieID)
+        const movieRequests = this.watchData
+        .filter(item => item.hasWatched)
+        .map(item => this.tmdbService.getMovieById(item.movieID)
         )
         
         forkJoin(movieRequests).subscribe((movies: Movie[]) => {
@@ -49,5 +50,8 @@ export class HasWatchedComponent implements OnInit {
     )
   }
 
+  detailsTest() {
+    this.fireService.addToHasWatched(349)
+  }
 
 }

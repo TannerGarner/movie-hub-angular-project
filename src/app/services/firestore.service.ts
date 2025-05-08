@@ -9,7 +9,6 @@ import { Observable } from 'rxjs';
 export class FirestoreService {
   private environmentInjector = inject(EnvironmentInjector);
   userId = localStorage.getItem('userId');
-
   constructor(private afs: AngularFirestore) {}
 
   // getUsers(): Observable<any[]> {
@@ -41,6 +40,39 @@ export class FirestoreService {
     })
   }
 
+  addToHasWatched(movieId: number) {
+    if(!this.userId) {
+      throw new Error('User ID not found in localStorage');
+    }
+    return runInInjectionContext(this.environmentInjector, () => {
+      const collectionRef = this.afs.collection(`users/${this.userId}/watchData`, ref => 
+        ref.where('movieID', '==', movieId)
+      )
   
+      return collectionRef.get().toPromise().then(snapshot => {
+        if (snapshot && !snapshot.empty) {
+          const doc = snapshot.docs[0];
+          console.log('Item already exists, updating...');
+          
+          return runInInjectionContext(this.environmentInjector, () => {
+            return this.afs.doc(`users/${this.userId}/watchData/${doc.id}`)
+            .update({hasWatched: true})
+            .then(() => {});
+          })
+
+          // console.log('Item already exists');
+          // return null;
+        } else {
+          return runInInjectionContext(this.environmentInjector, () => {
+            console.log('Movie added to collection')
+            return this.afs.collection(`users/${this.userId}/watchData`)
+              .add({movieID: movieId, hasWatched: true})
+              .then(() => {});
+          })
+        }
+      })
+    })
+
+  }
 
 }
