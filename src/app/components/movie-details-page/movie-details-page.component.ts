@@ -1,9 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { TmdbService } from '../../services/tmdb.service';
 import { FirestoreService } from '../../services/firestore.service';
 import { JsonPipe, DatePipe } from '@angular/common';
 import { TmdbVideo, TmdbVideoResponse } from '../../interfaces/tmdb-video.interface';
+import { Observable, Subscription } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-movie-details-page',
@@ -12,7 +14,7 @@ import { TmdbVideo, TmdbVideoResponse } from '../../interfaces/tmdb-video.interf
   styleUrl: './movie-details-page.component.scss'
 })
 
-export class MovieDetailsPageComponent implements OnInit {
+export class MovieDetailsPageComponent implements OnInit, OnDestroy {
   public movieDetails: any = null;
   youtubeURL: string = '';
   comment: string = '';
@@ -20,7 +22,9 @@ export class MovieDetailsPageComponent implements OnInit {
   movieId: number = 0;
   collection: any = null;
   router: Router;
-  watchData: any = null;
+  watchData$: Observable<any[]>;
+  private watchDataSubscription: Subscription | undefined;
+  hasWatched: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -29,13 +33,29 @@ export class MovieDetailsPageComponent implements OnInit {
     router: Router
   ) {
     this.router = router;
-    this.watchData = this.firestoreService.getWatchData();
+    this.watchData$ = this.firestoreService.getWatchData();
   }
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
-      this.movieId = +params['id']; // Convert string to number using '+'
+      this.movieId = +params['id'];
       this.loadMovieDetails();
+      this.setupWatchDataSubscription();
+    });
+  }
+
+  ngOnDestroy(): void {
+    if (this.watchDataSubscription) {
+      this.watchDataSubscription.unsubscribe();
+    }
+  }
+
+  private setupWatchDataSubscription(): void {
+    this.watchDataSubscription = this.watchData$.subscribe(data => {
+      if (Array.isArray(data)) {
+        const movieWatch = data.find(item => item.movieID === this.movieId);
+        this.hasWatched = movieWatch?.hasWatched || false;
+      }
     });
   }
 
@@ -67,12 +87,23 @@ export class MovieDetailsPageComponent implements OnInit {
   }
 
   markAsWatched() {
-    this.firestoreService.addToHasWatched(this.movieId).then(() => {
-      console.log('Movie added to watchlist');
-    }).catch((error) => {
-      console.error('Error adding movie to watchlist:', error);
-    });
+    this.firestoreService.addToHasWatched(this.movieId)
+      .then(() => {
+        console.log('Movie marked as watched');
+      })
+      .catch((error) => {
+        console.error('Error marking movie as watched:', error);
+      });
   }
+
+  unmarkAsWatched() {
+    // this.firestoreService.removeFromHasWatched(this.movieId).then(() => {
+    //   console.log('Movie removed from watchlist');
+    // }).catch((error) => {
+    //   console.error('Error removing movie from watchlist:', error);
+    // });
+  }
+
 
   addComment() {
     if (this.comment) {

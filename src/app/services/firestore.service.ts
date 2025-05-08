@@ -27,7 +27,7 @@ export class FirestoreService {
   //   return (watchlistRef)
   // } 
 
-  getWatchData(): Observable<any[]> {
+  getWatchData(): Observable<any> {
     return runInInjectionContext(this.environmentInjector, () => {
       if (!this.userId) {
         throw new Error('User ID not found in localStorage');

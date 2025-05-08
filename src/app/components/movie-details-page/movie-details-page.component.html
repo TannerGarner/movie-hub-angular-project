@@ -33,9 +33,13 @@
                         </button>
                     </mat-list-item>
                     <mat-list-item>
-                        <button mat-flat-button color="accent" *ngIf="!watchData.hasWatched" (click)="markAsWatched()">
+                        <button mat-flat-button *ngIf="!hasWatched" (click)="markAsWatched()">
                             <mat-icon>check</mat-icon>
                             <span>Mark as Watched</span>
+                        </button>
+                        <button mat-flat-button *ngIf="hasWatched" (click)="unmarkAsWatched()">
+                            <mat-icon>close</mat-icon>
+                            <span>Unmark as Watched</span>
                         </button>
                     </mat-list-item>
                     <mat-list-item>
