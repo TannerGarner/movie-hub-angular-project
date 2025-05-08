@@ -21,7 +21,7 @@ mat-card-content {
   flex-wrap: wrap;
 }
 
-.movie-poster {
+#movie-poster {
   width: 30%;
   flex-grow: 1;
   border-radius: 15px;

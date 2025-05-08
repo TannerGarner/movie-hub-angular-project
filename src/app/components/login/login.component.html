@@ -6,16 +6,16 @@
         </mat-card-header>
         <form #loginForm="ngForm">
             <mat-form-field>
-                <mat-label>Username</mat-label>
+                <mat-label>Email</mat-label>
                 <input matInput 
-                       name="username"
-                       #username="ngModel"
-                       placeholder="Enter your username" 
-                       [(ngModel)]="userLogin.username" 
+                       name="Email"
+                       #email="ngModel"
+                       placeholder="Enter your Email" 
+                       [(ngModel)]="userLogin.email" 
                        required>
-                <mat-error *ngIf="username.invalid && (username.dirty || username.touched)">
+                <mat-error *ngIf="email.invalid && (email.dirty || email.touched)">
                     <mat-icon matPrefix>error</mat-icon>
-                    Username is required
+                    Email is required
                 </mat-error>
             </mat-form-field>
             <mat-form-field>

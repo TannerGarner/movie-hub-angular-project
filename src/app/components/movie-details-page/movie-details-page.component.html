@@ -1,5 +1,3 @@
-<p>{{ movieDetails | json }}</p>
-
 <div class="container movie-details-page">
     <mat-card class="movie-content" *ngIf="movieDetails">
         <mat-card-header>
@@ -8,7 +6,7 @@
         </mat-card-header>
         <mat-card-content>
             <div class="media">
-                <img mat-card-image class="movie-poster" src="https://image.tmdb.org/t/p/original{{ movieDetails.poster_path }}" alt="{{ movieDetails.title }} poster">
+                <img mat-card-image class="movie-poster" id="movie-poster" src="https://image.tmdb.org/t/p/original{{ movieDetails.poster_path }}" alt="{{ movieDetails.title }} poster">
                 <iframe *ngIf="youtubeURL" class="video-player" [src]="youtubeURL | safeUrl" frameborder="0"></iframe>
             </div>
             <div class="movie-facts">

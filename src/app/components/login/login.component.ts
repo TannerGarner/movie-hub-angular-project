@@ -10,7 +10,7 @@ import { Router, RouterEvent } from '@angular/router';
 })
 export class LoginComponent {
   userLogin = {
-    username: '',
+    email: '',
     password: ''
   }
 
@@ -27,8 +27,8 @@ export class LoginComponent {
   }
 
   login() {
-    if (this.userLogin.username && this.userLogin.password) {
-      this.authService.login(this.userLogin.username, this.userLogin.password)
+    if (this.userLogin.email && this.userLogin.password) {
+      this.authService.login(this.userLogin.email, this.userLogin.password)
         .then(() => {
           alert('Login successful!');
           this.router.navigate(['/home']);
