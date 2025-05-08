@@ -1,1 +1,18 @@
-<p>has-watched works!</p>
+<div class="has-watched-container">
+    <!-- <div *ngIf="watchData">
+        <div *ngFor="let item of watchData">
+            <img mat-card-image class="movie-poster" src="https://image.tmdb.org/t/p/original{{item.poster_path}}" alt="{{movieDetails.ori}}"
+            {{item.movieID}}
+        </div>
+        
+    </div> -->
+    <div *ngIf="mappedMovies">
+        <div class="movie" id="" *ngFor="let movie of mappedMovies">
+            <img mat-card-image class="movie-poster" src="https://image.tmdb.org/t/p/original{{ movie.poster_path }}" alt="{{ movie.title }} poster">
+            {{movie.original_title}}
+            {{movie.release_date | date: 'MMMM d, y'}}
+        </div>
+    </div>
+</div> 
+
+<!-- <button mat-raised-button (click)="testMovieGrab()">test</button> -->

@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { tmdbSecrets } from '../../environments/tmdb.environment';
 import { TmdbVideoResponse } from '../interfaces/tmdb-video.interface';
+import { Movie } from '../interfaces/movie';
 
 @Injectable({
   providedIn: 'root'
@@ -28,11 +29,11 @@ export class TmdbService {
     }
   }
 
-  getMovieById(id: number) {
+  getMovieById(id: number): Observable<Movie> {
     const params = new HttpParams()
       .set('api_key', tmdbSecrets.apiKey);
 
-    return this.http.get(`${this.baseApiUrl}/movie/${id}`, { params });
+    return this.http.get<Movie>(`${this.baseApiUrl}/movie/${id}`, { params });
   }
 
   getMovieTrailer(id: number): Observable<TmdbVideoResponse> {

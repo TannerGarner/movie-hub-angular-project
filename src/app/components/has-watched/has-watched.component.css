@@ -1,1 +1,8 @@
-/*# sourceMappingURL=has-watched.component.css.map */
+.has-watched-container {
+  height: 50vh;
+  background-color: red;
+}
+
+.movie-poster {
+  width: 150px;
+}/*# sourceMappingURL=has-watched.component.css.map */

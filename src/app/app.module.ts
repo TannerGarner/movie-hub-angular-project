@@ -22,6 +22,7 @@ import { TextFieldModule } from '@angular/cdk/text-field';
 import { HasWatchedComponent } from './components/has-watched/has-watched.component';
 import { WatchlistComponent } from './components/watchlist/watchlist.component';
 import { RegisterComponent } from './components/register/register.component';
+import { TestComponent } from './test/test.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { RegisterComponent } from './components/register/register.component';
     SafeUrlPipe,
     HasWatchedComponent,
     WatchlistComponent,
-    RegisterComponent
+    RegisterComponent,
+    TestComponent
   ],
   imports: [
     BrowserModule,
