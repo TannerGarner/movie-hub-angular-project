@@ -54,4 +54,8 @@ export class HasWatchedComponent implements OnInit {
     this.fireService.addToHasWatched(349)
   }
 
+  detailsRemoveTest() {
+    this.fireService.removeFromHasWatched(349)
+  }
+
 }
