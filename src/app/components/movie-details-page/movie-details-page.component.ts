@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { TmdbService } from '../../services/tmdb.service';
+import { FirestoreService } from '../../services/firestore.service';
 import { JsonPipe, DatePipe } from '@angular/common';
 import { TmdbVideo, TmdbVideoResponse } from '../../interfaces/tmdb-video.interface';
 
@@ -19,13 +20,16 @@ export class MovieDetailsPageComponent implements OnInit {
   movieId: number = 0;
   collection: any = null;
   router: Router;
+  watchData: any = null;
 
   constructor(
     private route: ActivatedRoute,
     private tmdbService: TmdbService,
+    private firestoreService: FirestoreService,
     router: Router
   ) {
     this.router = router;
+    this.watchData = this.firestoreService.getWatchData();
   }
 
   ngOnInit(): void {
@@ -59,6 +63,14 @@ export class MovieDetailsPageComponent implements OnInit {
       } else {
         console.log('No trailer found');
       }
+    });
+  }
+
+  markAsWatched() {
+    this.firestoreService.addToHasWatched(this.movieId).then(() => {
+      console.log('Movie added to watchlist');
+    }).catch((error) => {
+      console.error('Error adding movie to watchlist:', error);
     });
   }
 
