@@ -4,28 +4,28 @@ import { Observable } from 'rxjs';
 import { tmdbSecrets } from '../../environments/tmdb.environment';
 import { TmdbVideoResponse } from '../interfaces/tmdb-video.interface';
 import { Movie } from '../interfaces/movie';
+import { TmdbSearchResponse } from '../interfaces/tmdb-search-response.interface';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TmdbService {
-  private baseApiUrl: string = 'https://api.themoviedb.org/3';
+  public baseApiUrl: string = 'https://api.themoviedb.org/3';
 
   constructor(public http: HttpClient) { }
 
-  searchMoviesByTitle(query: string | null): Observable<any> {
+  searchMoviesByTitle(query: string | null, page: number = 1): Observable<any> {
     if (query) {
       const params = new HttpParams()
         .set('api_key', tmdbSecrets.apiKey)
-        .set('query', query);
-
-      return this.http.get(`${this.baseApiUrl}/search/movie`, { params });
-    }
-    else {
+        .set('query', query)
+        .set('page', page.toString());
+      return this.http.get<TmdbSearchResponse>(`${this.baseApiUrl}/search/movie`, { params });
+    } else {
       const params = new HttpParams()
-        .set('api_key', tmdbSecrets.apiKey);
-
-      return this.http.get(`${this.baseApiUrl}/movie/popular`, { params });
+        .set('api_key', tmdbSecrets.apiKey)
+        .set('page', page.toString());
+      return this.http.get<TmdbSearchResponse>(`${this.baseApiUrl}/movie/popular`, { params });
     }
   }
 

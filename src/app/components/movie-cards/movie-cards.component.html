@@ -1,0 +1,14 @@
+<div *ngIf="movies">
+    <div class="card-list">
+        <mat-card *ngFor="let movie of movies">
+            <img [src]="movie.poster_path | imageUrl" [alt]="`${movie.title} poster`">
+            <mat-card-header>
+                <mat-card-title>{{ movie.title }}</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+                Release Date: {{ movie.release_date | date }}
+            </mat-card-content>
+        </mat-card>
+    </div>
+</div>
+<div *ngIf="!movies?.length">{{ noMoviesMsg }}</div>

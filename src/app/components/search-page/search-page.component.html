@@ -1,1 +1,18 @@
-<p>search-page works!</p>
+<h1>Browse all Movies</h1>
+
+<div class="search-bar">
+    <mat-icon class="search-icon">search</mat-icon>
+    <input [formControl]="searchControl" 
+           placeholder="Search for movies...">
+</div>
+
+<div *ngIf="searchRes$ | async as searchRes">
+    <app-movie-cards [movies]="searchRes.results"
+                     [noMoviesMsg]="`There are no search results for “${searchControl.value}”.`" />
+
+    <mat-paginator *ngIf="searchRes.total_pages > 1"
+                   [length]="searchRes.total_results"
+                   [pageSize]="20"
+                   (page)="handlePageEvent($event)"
+                   aria-label="Select page" />
+</div>

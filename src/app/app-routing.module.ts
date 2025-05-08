@@ -10,6 +10,7 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'home', component: SearchPageComponent },
+  { path: 'search', component: SearchPageComponent },
   { path: 'movie/:id', component: MovieDetailsPageComponent }
 ];
 

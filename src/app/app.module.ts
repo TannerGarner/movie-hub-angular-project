@@ -14,7 +14,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { SignupComponent } from './components/signup/signup.component';
-import { SearchBarComponent } from './components/search-bar/search-bar.component';
 import { SearchPageComponent } from './components/search-page/search-page.component';
 import { MovieDetailsPageComponent } from './components/movie-details-page/movie-details-page.component';
 import { SafeUrlPipe } from './pipes/safe-url.pipe';
@@ -22,19 +21,25 @@ import { TextFieldModule } from '@angular/cdk/text-field';
 import { HasWatchedComponent } from './components/has-watched/has-watched.component';
 import { WatchlistComponent } from './components/watchlist/watchlist.component';
 import { RegisterComponent } from './components/register/register.component';
+import { MatIconModule } from '@angular/material/icon';
+import { MatCardModule } from '@angular/material/card';
+import { MovieCardsComponent } from './components/movie-cards/movie-cards.component';
+import { ImageUrlPipe } from './pipes/image-url.pipe';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     SignupComponent,
-    SearchBarComponent,
     SearchPageComponent,
     MovieDetailsPageComponent,
     SafeUrlPipe,
     HasWatchedComponent,
     WatchlistComponent,
     RegisterComponent,
+    MovieCardsComponent,
+    ImageUrlPipe
   ],
   imports: [
     BrowserModule,
@@ -48,7 +53,10 @@ import { RegisterComponent } from './components/register/register.component';
     FormsModule,
     ReactiveFormsModule,
     TextFieldModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatIconModule,
+    MatCardModule,
+    MatPaginatorModule
   ],
   providers: [
     provideHttpClient(withInterceptorsFromDi())
