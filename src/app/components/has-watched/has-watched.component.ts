@@ -51,19 +51,3 @@ export class HasWatchedComponent implements OnInit {
 
 
 }
-
-// testMovieGrab() {
-//   console.log('test')
-//   this.tmdbService.getMovieById(348).subscribe((data) => {
-//     console.log(data)
-//     this.movieDetails = data;
-//     console.log(this.movieDetails.poster_path)
-//     console.log(this.userId)
-//   })
-// }
-
-// testWatchDataFetch() {
-//   console.log('test')
-//   this.watchData = this.fireService.getWatchData()
-//   console.log(this.watchData)
-// }

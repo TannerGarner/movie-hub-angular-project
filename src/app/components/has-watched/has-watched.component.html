@@ -1,18 +1,16 @@
-<div class="has-watched-container">
-    <!-- <div *ngIf="watchData">
-        <div *ngFor="let item of watchData">
-            <img mat-card-image class="movie-poster" src="https://image.tmdb.org/t/p/original{{item.poster_path}}" alt="{{movieDetails.ori}}"
-            {{item.movieID}}
-        </div>
-        
-    </div> -->
-    <div *ngIf="mappedMovies">
-        <div class="movie" id="" *ngFor="let movie of mappedMovies">
-            <img mat-card-image class="movie-poster" src="https://image.tmdb.org/t/p/original{{ movie.poster_path }}" alt="{{ movie.title }} poster">
-            {{movie.original_title}}
-            {{movie.release_date | date: 'MMMM d, y'}}
-        </div>
+<mat-card class="has-watched-container">
+    <div class="mappedMovies" *ngIf="mappedMovies">
+        <mat-card class="movie" id="{{movie.id}}" *ngFor="let movie of mappedMovies">
+            <a class="movieLink" href="movie/{{movie.id}}">
+                <img mat-card-image class="movie-poster" src="https://image.tmdb.org/t/p/original{{ movie.poster_path }}" alt="{{ movie.title }} poster">
+                <div class="movieDetails">
+                <span>{{movie.title}}</span>
+                <span style="color:gray" >{{movie.release_date | date: 'MMMM d, y'}}</span>
+                
+            </div>
+            </a>
+        </mat-card>
     </div>
-</div> 
+</mat-card> 
 
 <!-- <button mat-raised-button (click)="testMovieGrab()">test</button> -->
