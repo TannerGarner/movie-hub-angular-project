@@ -55,9 +55,6 @@ export class AuthService {
           return this.afs.collection('users').doc(uid).get().toPromise()
           .then(doc => {
             if (doc?.exists) {
-              // const userData = doc.data();
-              // localStorage.setItem('user', JSON.stringify(userData));
-              // return userData;
               return doc.data();
             } else {
               throw new Error('User data not found in firestore')
