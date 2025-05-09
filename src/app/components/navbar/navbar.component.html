@@ -1,0 +1,10 @@
+<mat-toolbar>
+    <mat-toolbar-row class="navbar">
+        <div>Movie App</div>
+        <div class="navOptions">
+            <div class="navLink" (click)="goTo('profile')">Profile</div>
+            <div class="navLink" (click)="goTo('home')">Search</div>
+            <button mat-raised-button (click)="logout()">Log Out</button>
+        </div>
+    </mat-toolbar-row>
+</mat-toolbar>

@@ -26,6 +26,26 @@ export class LoginComponent {
     
   }
 
+  googleLogin() {
+    this.authService.googleLogin()
+    .then(userData => {
+      alert('Google login successful');
+      this.router.navigate(['/home']);
+    })
+    .catch(err => {
+      alert(`Google login failed: ${err.message}`);
+    });
+
+    this.authService.getIdToken().subscribe(token => {
+      this.token = token;
+      if (token) {
+        localStorage.setItem('token', token);
+      } else {
+        localStorage.removeItem('token')
+      }
+    });
+  }
+
   login() {
     if (this.userLogin.email && this.userLogin.password) {
       this.authService.login(this.userLogin.email, this.userLogin.password)
