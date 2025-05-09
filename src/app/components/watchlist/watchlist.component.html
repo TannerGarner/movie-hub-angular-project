@@ -1,17 +1,17 @@
-<div class="watchlist-container">
+<mat-card class="watchlist-container">
+    <h1>Watchlist</h1>
     <div class="mappedMovies" *ngIf="mappedMovies">
         <mat-card class="movie" id="{{movie.id}}" *ngFor="let movie of mappedMovies">
+            <a class="removeLink" (click)="removeMovie(movie.id)">
+                <mat-icon class="removeIcon">cancel</mat-icon>
+            </a>
             <a class="movieLink" href="movie/{{movie.id}}">
                 <img mat-card-image class="movie-poster" src="https://image.tmdb.org/t/p/original{{ movie.poster_path }}" alt="{{ movie.title }} poster">
                 <div class="movieDetails">
                 <span>{{movie.title}}</span>
                 <span style="color:gray" >{{movie.release_date | date: 'MMMM d, y'}}</span>
-                
             </div>
             </a>
         </mat-card>
     </div>
-    <button mat-raised-button (click)="detailsTest()">asdf</button>
-    <button mat-raised-button (click)="detailsRemoveTest()">asdf</button>
-
-</div>
+</mat-card>

@@ -48,6 +48,13 @@ export class WatchlistComponent {
     )
   }
 
+  removeMovie(movieId: number) {
+    this.fireService.removeFromWatchlist(movieId).then(() => {
+      this.mappedMovies = this.mappedMovies.filter((movie: any) => movie.id !== movieId);
+      this.cdr.detectChanges();
+    })
+  }
+
   detailsTest() {
     this.fireService.addToWatchlist(349)
   }

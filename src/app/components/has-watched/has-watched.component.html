@@ -1,7 +1,12 @@
 <mat-card class="has-watched-container">
+    <h1 class="title">Watched Movies</h1>
     <div class="mappedMovies" *ngIf="mappedMovies">
         <mat-card class="movie" id="{{movie.id}}" *ngFor="let movie of mappedMovies">
+            <a class="removeLink" (click)="removeMovie(movie.id)">
+                <mat-icon class="removeIcon">cancel</mat-icon>
+            </a>
             <a class="movieLink" href="movie/{{movie.id}}">
+
                 <img mat-card-image class="movie-poster" src="https://image.tmdb.org/t/p/original{{ movie.poster_path }}" alt="{{ movie.title }} poster">
                 <div class="movieDetails">
                 <span>{{movie.title}}</span>
@@ -11,10 +16,4 @@
             </a>
         </mat-card>
     </div>
-    <button mat-raised-button (click)="detailsTest()">Add to hasWatched</button>
-    <button mat-raised-button (click)="detailsRemoveTest()">remove from hasWatched</button>
-    <button mat-raised-button (click)="ratingTest()">Add Rating</button>
-
 </mat-card> 
-
-<!-- <button mat-raised-button (click)="testMovieGrab()">test</button> -->

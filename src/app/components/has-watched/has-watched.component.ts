@@ -48,6 +48,13 @@ export class HasWatchedComponent implements OnInit {
     )
   }
 
+  removeMovie(movieId: number) {
+    this.fireService.removeFromHasWatched(movieId).then(() => {
+      this.mappedMovies = this.mappedMovies.filter((movie: any) => movie.id !== movieId);
+      this.cdr.detectChanges();
+    })
+  }
+
   detailsTest() {
     this.fireService.addToHasWatched(349)
   }
