@@ -27,6 +27,9 @@ export class MovieDetailsPageComponent implements OnInit, OnDestroy {
   comments$: Observable<any[]> = new Observable<any[]>();
   private commentsSubscription: Subscription | undefined;
   hasWatched: boolean = false;
+  onWatchList: boolean = false;
+  rating: number = 0;
+  ratingDialogueOpen: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -61,6 +64,8 @@ export class MovieDetailsPageComponent implements OnInit, OnDestroy {
       if (Array.isArray(data)) {
         const movieWatch = data.find(item => item.movieID === this.movieId);
         this.hasWatched = movieWatch?.hasWatched || false;
+        this.onWatchList = movieWatch?.onWatchList || false;
+        this.rating = movieWatch?.rating || null;
       }
     });
   }
@@ -99,22 +104,58 @@ export class MovieDetailsPageComponent implements OnInit, OnDestroy {
     });
   }
 
-  markAsWatched() {
-    this.firestoreService.addToHasWatched(this.movieId)
+  addToWatchList() {
+    this.firestoreService.addToWatchlist(this.movieId)
       .then(() => {
-        console.log('Movie marked as watched');
+        alert('Movie added to watchlist');
       })
       .catch((error) => {
-        console.error('Error marking movie as watched:', error);
+        alert(`Error adding movie to watchlist: ${error}`);
       });
   }
 
+  removeFromWatchList() {
+    this.firestoreService.removeFromWatchlist(this.movieId)
+      .then(() => {
+        alert('Movie removed from watchlist');
+      })
+      .catch((error) => {
+        alert(`Error removing movie from watchlist: ${error}`);
+      });
+  }
+
+  markAsWatched() {
+    this.firestoreService.addToHasWatched(this.movieId)
+      .then(() => {
+        alert('Movie marked as watched');
+      })
+      .catch((error) => {
+        alert(`Error marking movie as watched: ${error}`);      });
+  }
+
   unmarkAsWatched() {
-    // this.firestoreService.removeFromHasWatched(this.movieId).then(() => {
-    //   console.log('Movie removed from watchlist');
-    // }).catch((error) => {
-    //   console.error('Error removing movie from watchlist:', error);
-    // });
+    this.firestoreService.removeFromHasWatched(this.movieId).then(() => {
+      alert('Movie unmarked as watched');
+    }).catch((error) => {
+      alert(`Error unmarking movie as watched: ${error}`);
+    });
+  }
+
+  toggleRatingDialog() {
+    this.ratingDialogueOpen = !this.ratingDialogueOpen;
+  }
+
+  setRating(rate: number) {
+    this.rating = rate;
+    this.firestoreService.rateMovie(this.movieId, rate)
+      .then(() => {
+        console.log('Rating set successfully');
+        this.toggleRatingDialog(); // Close the dialog after setting the rating
+      })
+      .catch((error) => {
+        console.error('Error setting rating:', error);
+      });
+
   }
 
   addComment() {

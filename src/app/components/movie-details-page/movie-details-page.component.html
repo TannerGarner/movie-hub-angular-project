@@ -27,9 +27,13 @@
                 </mat-list>
                 <mat-list class="movie-actions">
                     <mat-list-item>
-                        <button mat-flat-button color="primary">
+                        <button mat-flat-button *ngIf="!onWatchList" (click)="addToWatchList()">
                             <mat-icon>add</mat-icon>
                             <span>Add to Watchlist</span>
+                        </button>
+                        <button mat-flat-button *ngIf="onWatchList" (click)="removeFromWatchList()">
+                            <mat-icon>remove</mat-icon>
+                            <span>Remove from Watchlist</span>
                         </button>
                     </mat-list-item>
                     <mat-list-item>
@@ -43,10 +47,23 @@
                         </button>
                     </mat-list-item>
                     <mat-list-item>
-                        <button mat-flat-button>
+                        <button mat-flat-button *ngIf="!rating" (click)="toggleRatingDialog()">
                             <mat-icon>star_rate</mat-icon>
                             <span>Rate Movie</span>
                         </button>
+                        <button mat-flat-button *ngIf="rating" (click)="toggleRatingDialog()" class="rating-display-button">
+                            <mat-icon *ngFor="let i of [].constructor(rating)">star_rate</mat-icon>
+                        </button>
+                    </mat-list-item>
+                    <mat-list-item *ngIf="ratingDialogueOpen">
+                        <mat-button-toggle-group>
+                            <mat-button-toggle *ngFor="let rate of [1, 2, 3, 4, 5]"
+                                [value]="rate"
+                                (change)="setRating(rate)"
+                                [checked]="rate === rating">
+                                {{ rate }}
+                            </mat-button-toggle>
+                        </mat-button-toggle-group>
                     </mat-list-item>
                 </mat-list>
             </div>
