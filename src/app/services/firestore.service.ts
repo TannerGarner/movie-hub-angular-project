@@ -53,8 +53,7 @@ export class FirestoreService {
     })
   }
 
-
-  getWatchData(): Observable<any> {
+  getWatchData(): Observable<any[]> {
     return runInInjectionContext(this.environmentInjector, () => {
       if (!this.userId) {
         throw new Error('User ID not found in localStorage');
@@ -172,6 +171,32 @@ export class FirestoreService {
           return runInInjectionContext(this.environmentInjector, () => {
             return this.afs.doc(`users/${this.userId}/watchData/${doc.id}`)
               .update({onWatchList: false})
+              .then(() => {});
+          })
+        } else {
+          return null;
+        }
+      })
+    })
+  }
+
+  rateMovie(movieId: number, rating: number) {
+    if (!this.userId) {
+      throw new Error('User ID not found in localStorage');
+    }
+    return runInInjectionContext(this.environmentInjector, () => {
+      const collectionRef = this.afs.collection(`users/${this.userId}/watchData`, ref =>
+        ref.where('movieID', '==', movieId)
+      )
+
+      return collectionRef.get().toPromise().then(snapshot => {
+        if(snapshot && !snapshot.empty) {
+          const doc = snapshot.docs[0];
+          console.log('Item already exists, updating...');
+
+          return runInInjectionContext(this.environmentInjector, () => {
+            return this.afs.doc(`users/${this.userId}/watchData/${doc.id}`)
+              .update({rating: rating})
               .then(() => {});
           })
         } else {
