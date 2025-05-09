@@ -51,4 +51,8 @@ export class RegisterComponent {
       alert('Please fill out all fields.')
     }
   }
+
+  goToLogin() {
+    this.router.navigate(['/login']);
+  }
 }

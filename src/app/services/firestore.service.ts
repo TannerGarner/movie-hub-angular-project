@@ -11,6 +11,48 @@ export class FirestoreService {
   userId = localStorage.getItem('userId');
   constructor(private afs: AngularFirestore) {}
 
+  // getUsers(): Observable<any[]> {
+  //   const usersRef = collection(this.firestore, 'users');
+  //   return collectionData(usersRef) as Observable<any[]>;
+  // }
+
+  // addUser(user: any): Promise<any> {
+  //   const usersRef = collection(this.firestore, 'users');
+  //   return addDoc(usersRef, user);
+  // }
+
+  // getWatchlist(userId: string):Observable<any[]> {
+  //   const watchlistRef = collection(this.firestore, `users/${userId}/watchlist`);
+  //   console.log(watchlistRef)
+  //   return (watchlistRef)
+  // } 
+
+  getAllComments(movieId: number): Observable<any[]> {
+    return runInInjectionContext(this.environmentInjector, () => {
+      if (!this.userId) {
+        throw new Error('User ID not found in localStorage');
+      }
+      return this.afs
+        .collection('comments', ref => ref.where('movieID', '==', movieId.toString()))
+        .valueChanges();
+    })
+  }
+
+  addComment(movieId: number, comment: string): Promise<any> {
+    return runInInjectionContext(this.environmentInjector, () => {
+      if (!this.userId) {
+        throw new Error('User ID not found in localStorage');
+      }
+      const commentData = {
+        movieID: movieId.toString(),
+        userID: this.userId,
+        text: comment,
+        date: new Date()
+      };
+      return this.afs.collection('comments').add(commentData);
+    })
+  }
+
   getWatchData(): Observable<any[]> {
     return runInInjectionContext(this.environmentInjector, () => {
       if (!this.userId) {

@@ -1,6 +1,6 @@
 <div *ngIf="movies">
     <div class="card-list">
-        <mat-card *ngFor="let movie of movies">
+        <mat-card *ngFor="let movie of movies" (click)="goToMovieDetails(movie.id)">
             <img [src]="movie.poster_path | imageUrl" [alt]="`${movie.title} poster`">
             <mat-card-header>
                 <mat-card-title>{{ movie.title }}</mat-card-title>
