@@ -11,10 +11,21 @@ export class FirestoreService {
   userId = localStorage.getItem('userId');
   constructor(private afs: AngularFirestore) {}
 
-  // getUsers(): Observable<any[]> {
-  //   const usersRef = collection(this.firestore, 'users');
-  //   return collectionData(usersRef) as Observable<any[]>;
-  // }
+  getUsers(filterIDs?: string[]): Observable<any[]> {
+    return runInInjectionContext(this.environmentInjector, () => {
+      if (!this.userId) {
+        throw new Error('User ID not found in localStorage');
+      }
+      return this.afs
+        .collection('users', ref => {
+          if (filterIDs && filterIDs.length > 0) {
+            return ref.where('userID', 'in', filterIDs);
+          }
+          return ref;
+        })
+        .valueChanges();
+    });
+  }
 
   // addUser(user: any): Promise<any> {
   //   const usersRef = collection(this.firestore, 'users');
@@ -34,7 +45,7 @@ export class FirestoreService {
       }
       return this.afs
         .collection('comments', ref => ref.where('movieID', '==', movieId.toString()))
-        .valueChanges();
+        .valueChanges()
     })
   }
 
