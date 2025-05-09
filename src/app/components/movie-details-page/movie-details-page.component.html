@@ -33,9 +33,13 @@
                         </button>
                     </mat-list-item>
                     <mat-list-item>
-                        <button mat-flat-button color="accent">
+                        <button mat-flat-button *ngIf="!hasWatched" (click)="markAsWatched()">
                             <mat-icon>check</mat-icon>
                             <span>Mark as Watched</span>
+                        </button>
+                        <button mat-flat-button *ngIf="hasWatched" (click)="unmarkAsWatched()">
+                            <mat-icon>close</mat-icon>
+                            <span>Unmark as Watched</span>
                         </button>
                     </mat-list-item>
                     <mat-list-item>
@@ -69,7 +73,11 @@
                 <mat-list>
                     <mat-list-item *ngFor="let comment of comments">
                         <mat-icon matListItemIcon>comment</mat-icon>
-                        <span matListItemTitle>{{ comment }}</span>
+                        <span matListItemTitle>{{ comment.text }}</span>
+                        <span matListItemSubtitle>by {{ comment.userID }} on {{ comment.date | date:'short' }}</span>
+                        <button mat-icon-button (click)="deleteComment(comment)" matTooltip="Delete Comment">
+                            <mat-icon>delete</mat-icon>
+                        </button>
                     </mat-list-item>
                 </mat-list>
                 <div class="collection" *ngIf="collection && collection.parts.length > 0">

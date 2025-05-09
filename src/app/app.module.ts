@@ -26,6 +26,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MovieCardsComponent } from './components/movie-cards/movie-cards.component';
 import { ImageUrlPipe } from './pipes/image-url.pipe';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { ProfileComponent } from './components/profile/profile.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     WatchlistComponent,
     RegisterComponent,
     MovieCardsComponent,
-    ImageUrlPipe
+    ImageUrlPipe,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,
