@@ -43,8 +43,6 @@ export class WatchlistComponent {
             release_date: movie.release_date,
           }));
         this.cdr.detectChanges();
-
-          console.log(this.mappedMovies)
         });
       }
     )

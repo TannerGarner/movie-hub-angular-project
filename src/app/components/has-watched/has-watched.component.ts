@@ -43,8 +43,6 @@ export class HasWatchedComponent implements OnInit {
             release_date: movie.release_date,
           }));
         this.cdr.detectChanges();
-
-          console.log(this.mappedMovies)
         });
       }
     )
@@ -56,6 +54,10 @@ export class HasWatchedComponent implements OnInit {
 
   detailsRemoveTest() {
     this.fireService.removeFromHasWatched(349)
+  }
+
+  ratingTest () {
+    this.fireService.rateMovie(348, 9)
   }
 
 }
