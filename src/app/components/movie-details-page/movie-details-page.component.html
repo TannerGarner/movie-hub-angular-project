@@ -74,7 +74,7 @@
                     <mat-list-item *ngFor="let comment of comments">
                         <mat-icon matListItemIcon>comment</mat-icon>
                         <span matListItemTitle>{{ comment.text }}</span>
-                        <span matListItemSubtitle>by {{ comment.userID }} on {{ comment.date | date:'short' }}</span>
+                        <span matListItemSubtitle>by {{ comment.username }} on {{ comment.date | date:'short' }}</span>
                         <button mat-icon-button (click)="deleteComment(comment)" matTooltip="Delete Comment">
                             <mat-icon>delete</mat-icon>
                         </button>

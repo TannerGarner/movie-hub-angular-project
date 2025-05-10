@@ -2,10 +2,8 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { TmdbService } from '../../services/tmdb.service';
 import { FirestoreService } from '../../services/firestore.service';
-import { JsonPipe, DatePipe } from '@angular/common';
 import { TmdbVideo, TmdbVideoResponse } from '../../interfaces/tmdb-video.interface';
 import { Observable, Subscription } from 'rxjs';
-import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-movie-details-page',
@@ -69,6 +67,7 @@ export class MovieDetailsPageComponent implements OnInit, OnDestroy {
     this.comments$ = this.firestoreService.getAllComments(this.movieId);
     this.commentsSubscription = this.comments$.subscribe(comments => {
       this.comments = comments;
+      console.log("this.comments:", this.comments);
     });
   }
 
