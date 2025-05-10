@@ -20,7 +20,7 @@ export class FirestoreService {
       }
   
       // Create an array of observables, one for each user document:
-      const userObservables = userIDs.map(userID => 
+      const userObservables = userIDs.map(userID =>
         this.afs.doc<RawUser>(`users/${userID}`)
           .valueChanges()
           .pipe(
