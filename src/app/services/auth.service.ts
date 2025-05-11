@@ -9,7 +9,7 @@ export class AuthService {
 
   private environmentInjector = inject(EnvironmentInjector);
   constructor(
-    private afAuth: AngularFireAuth,
+    public afAuth: AngularFireAuth,
     private afs: AngularFirestore
   ) {}
 
