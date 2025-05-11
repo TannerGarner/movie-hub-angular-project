@@ -67,7 +67,7 @@
                     </mat-list-item>
                 </mat-list>
             </div>
-            <div class="comment-section">
+            <div class="comment-section" *ngIf="comments$ | async as comments">
                 <h3>{{comments.length}} Comments</h3>
                 <mat-form-field appearance="outline" class="comment-input">
                     <mat-label>Comment</mat-label>

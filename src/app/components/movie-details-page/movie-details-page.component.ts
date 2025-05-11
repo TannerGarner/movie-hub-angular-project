@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { TmdbService } from '../../services/tmdb.service';
 import { FirestoreService } from '../../services/firestore.service';
@@ -16,14 +16,14 @@ export class MovieDetailsPageComponent implements OnInit, OnDestroy {
   public movieDetails: any = null;
   youtubeURL: string = '';
   comment: string = '';
-  comments: any[] = [];
+  // comments: any[] = [];
   movieId: number = 0;
   collection: any = null;
   router: Router;
   watchData$: Observable<any[]>;
   private watchDataSubscription: Subscription | undefined;
-  comments$: Observable<any[]> = new Observable<any[]>();
-  private commentsSubscription: Subscription | undefined;
+  comments$: Observable<any[]> | undefined;
+  // private commentsSubscription: Subscription | undefined;
   hasWatched: boolean = false;
   onWatchList: boolean = false;
   rating: number = 0;
@@ -33,6 +33,7 @@ export class MovieDetailsPageComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private tmdbService: TmdbService,
     private firestoreService: FirestoreService,
+    // private cdr: ChangeDetectorRef,
     router: Router
   ) {
     this.router = router;
@@ -44,7 +45,8 @@ export class MovieDetailsPageComponent implements OnInit, OnDestroy {
       this.movieId = +params['id'];
       this.loadMovieDetails();
       this.setupWatchDataSubscription();
-      this.setupCommentsSubscription();
+      // this.setupCommentsSubscription();
+      this.comments$ = this.firestoreService.getAllComments(this.movieId);
     });
   }
 
@@ -52,9 +54,9 @@ export class MovieDetailsPageComponent implements OnInit, OnDestroy {
     if (this.watchDataSubscription) {
       this.watchDataSubscription.unsubscribe();
     }
-    if (this.commentsSubscription) {
-      this.commentsSubscription.unsubscribe();
-    }
+    // if (this.commentsSubscription) {
+    //   this.commentsSubscription.unsubscribe();
+    // }
   }
 
   private setupWatchDataSubscription(): void {
@@ -68,13 +70,22 @@ export class MovieDetailsPageComponent implements OnInit, OnDestroy {
     });
   }
 
-  private setupCommentsSubscription(): void {
-    this.comments$ = this.firestoreService.getAllComments(this.movieId);
-    this.commentsSubscription = this.comments$.subscribe(comments => {
-      this.comments = comments;
-      console.log("this.comments:", this.comments);
-    });
-  }
+  // private setupCommentsSubscription(): void {
+  //   console.log("0 this.comments:", this.comments);
+  //   this.commentsSubscription = this.firestoreService
+  //     .getAllComments(this.movieId)
+  //     .subscribe(comments => {
+  //       this.comments = comments;
+  //       this.cdr.detectChanges();
+  //       console.log("this.comments:", this.comments);
+  //     });
+
+  //   // this.comments$ = this.firestoreService.getAllComments(this.movieId);
+  //   // this.commentsSubscription = this.comments$.subscribe(comments => {
+  //   //   this.comments = comments;
+  //   //   console.log("this.comments:", this.comments);
+  //   // });
+  // }
 
   private loadMovieDetails() {
     this.tmdbService.getMovieById(this.movieId).subscribe((data) => {
