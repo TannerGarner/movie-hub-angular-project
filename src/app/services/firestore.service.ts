@@ -1,7 +1,7 @@
 import { ChangeDetectorRef, EnvironmentInjector, inject, Injectable, runInInjectionContext } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { combineLatestWith, filter, forkJoin, map, mergeMap, Observable, of, switchMap, take, tap } from 'rxjs';
-import { RawComment, SanitizedComment } from '../interfaces/comment.interface';
+import { RawComment, Comment } from '../interfaces/comment.interface';
 import { RawUser, SanitizedUser } from '../interfaces/user.interface';
 
 @Injectable({
@@ -49,7 +49,7 @@ export class FirestoreService {
   //   return (watchlistRef)
   // } 
 
-  getAllComments(movieID: number): Observable<SanitizedComment[]> {
+  getAllComments(movieID: number): Observable<Comment[]> {
     return runInInjectionContext(this.environmentInjector, () => {
       if (!this.userId) {
         throw new Error('User ID not found in localStorage');
@@ -63,7 +63,7 @@ export class FirestoreService {
 
             const users$: Observable<SanitizedUser[]> = this.getUsers(userIDs);
 
-            const comments$: Observable<SanitizedComment[]> = users$.pipe(
+            const comments$: Observable<Comment[]> = users$.pipe(
               map((users) => {
                 const userMap = new Map(users.map(user => [user.userID, user]));
 
