@@ -1,6 +1,8 @@
 import { ChangeDetectorRef, EnvironmentInjector, inject, Injectable, runInInjectionContext } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { Observable } from 'rxjs';
+import { combineLatestWith, filter, forkJoin, map, mergeMap, Observable, of, switchMap, take, tap } from 'rxjs';
+import { RawComment, SanitizedComment } from '../interfaces/comment.interface';
+import { RawUser, SanitizedUser } from '../interfaces/user.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -11,19 +13,28 @@ export class FirestoreService {
   userId = localStorage.getItem('userId');
   constructor(private afs: AngularFirestore) {}
 
-  getUsers(filterIDs?: string[]): Observable<any[]> {
+  getUsers(userIDs?: string[]): Observable<SanitizedUser[]> {
     return runInInjectionContext(this.environmentInjector, () => {
-      if (!this.userId) {
-        throw new Error('User ID not found in localStorage');
+      if (!userIDs || userIDs.length === 0) {
+        return of([]);
       }
-      return this.afs
-        .collection('users', ref => {
-          if (filterIDs && filterIDs.length > 0) {
-            return ref.where('userID', 'in', filterIDs);
-          }
-          return ref;
-        })
-        .valueChanges();
+  
+      // Create an array of observables, one for each user document:
+      const userObservables = userIDs.map(userID =>
+        this.afs.doc<RawUser>(`users/${userID}`)
+          .valueChanges()
+          .pipe(
+            filter((userData: RawUser | undefined): userData is RawUser => !!userData),
+            map((userData: RawUser): SanitizedUser => ({
+              ...userData,
+              userID: userID, // Add userID to each user object
+            })),
+            take(1)
+          )
+      );
+  
+      // Combine all observables into a single observable that emits an array of users:
+      return forkJoin(userObservables);
     });
   }
 
@@ -38,15 +49,38 @@ export class FirestoreService {
   //   return (watchlistRef)
   // } 
 
-  getAllComments(movieId: number): Observable<any[]> {
+  getAllComments(movieID: number): Observable<SanitizedComment[]> {
     return runInInjectionContext(this.environmentInjector, () => {
       if (!this.userId) {
         throw new Error('User ID not found in localStorage');
       }
       return this.afs
-        .collection('comments', ref => ref.where('movieID', '==', movieId.toString()))
+        .collection<RawComment>('comments', ref => ref.where('movieID', '==', movieID.toString()))
         .valueChanges()
-    })
+        .pipe(
+          switchMap((comments: RawComment[]) => {
+            const userIDs = comments.map(comment => comment.userID);
+
+            const users$: Observable<SanitizedUser[]> = this.getUsers(userIDs);
+
+            const comments$: Observable<SanitizedComment[]> = users$.pipe(
+              map((users) => {
+                const userMap = new Map(users.map(user => [user.userID, user]));
+
+                const sanitizedComments = comments.map(comment => ({
+                  ...comment,
+                  username: userMap.get(comment.userID)?.username || 'Unknown User',
+                  date: comment.date.toDate() // Convert firestore Timestamp to JS Date
+                }));
+
+                return sanitizedComments.sort((a, b) => b.date.getTime() - a.date.getTime());
+              })
+            );
+
+            return comments$;
+          })
+        );
+    });
   }
 
   addComment(movieId: number, comment: string): Promise<any> {
