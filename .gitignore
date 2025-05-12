@@ -36,12 +36,17 @@ yarn-error.log
 /libpeerconnection.log
 testem.log
 /typings
+test/
+/public
 
 # System files
 .DS_Store
 Thumbs.db
 
+# Sensitive
 /src/environments/
 firebase.environment.ts
 tmdb.environment.ts
-test/
+
+# Firebase local state
+.firebase/

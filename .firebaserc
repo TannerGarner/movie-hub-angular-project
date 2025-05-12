@@ -1,0 +1,9 @@
+{
+  "projects": {
+    "default": "movie-hub-angular-project",
+    "prod": "movie-hub-angular-project",
+    "staging": "movie-hub-angular-project"
+  },
+  "targets": {},
+  "etags": {}
+}
