@@ -1,8 +1,8 @@
-import { ChangeDetectorRef, EnvironmentInjector, inject, Injectable, runInInjectionContext } from '@angular/core';
+import { EnvironmentInjector, inject, Injectable, runInInjectionContext } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { combineLatestWith, filter, forkJoin, map, mergeMap, Observable, of, switchMap, take, tap } from 'rxjs';
-import { RawComment, SanitizedComment } from '../interfaces/comment.interface';
-import { RawUser, SanitizedUser } from '../interfaces/user.interface';
+import { filter, forkJoin, map, Observable, of, switchMap, take } from 'rxjs';
+import { Comment, RawComment } from '../interfaces/comment.interface';
+import { User, RawUser } from '../interfaces/user.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +13,7 @@ export class FirestoreService {
   userId = localStorage.getItem('userId');
   constructor(private afs: AngularFirestore) {}
 
-  getUsers(userIDs?: string[]): Observable<SanitizedUser[]> {
+  getUsers(userIDs?: string[]): Observable<User[]> {
     return runInInjectionContext(this.environmentInjector, () => {
       if (!userIDs || userIDs.length === 0) {
         return of([]);
@@ -25,7 +25,7 @@ export class FirestoreService {
           .valueChanges()
           .pipe(
             filter((userData: RawUser | undefined): userData is RawUser => !!userData),
-            map((userData: RawUser): SanitizedUser => ({
+            map((userData: RawUser): User => ({
               ...userData,
               userID: userID, // Add userID to each user object
             })),
@@ -49,7 +49,7 @@ export class FirestoreService {
   //   return (watchlistRef)
   // } 
 
-  getAllComments(movieID: number): Observable<SanitizedComment[]> {
+  getAllComments(movieID: number): Observable<Comment[]> {
     return runInInjectionContext(this.environmentInjector, () => {
       if (!this.userId) {
         throw new Error('User ID not found in localStorage');
@@ -61,9 +61,9 @@ export class FirestoreService {
           switchMap((comments: RawComment[]) => {
             const userIDs = comments.map(comment => comment.userID);
 
-            const users$: Observable<SanitizedUser[]> = this.getUsers(userIDs);
+            const users$: Observable<User[]> = this.getUsers(userIDs);
 
-            const comments$: Observable<SanitizedComment[]> = users$.pipe(
+            const comments$: Observable<Comment[]> = users$.pipe(
               map((users) => {
                 const userMap = new Map(users.map(user => [user.userID, user]));
 

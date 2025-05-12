@@ -67,7 +67,7 @@
                     </mat-list-item>
                 </mat-list>
             </div>
-            <div class="comment-section">
+            <div class="comment-section" *ngIf="comments$ | async as comments">
                 <h3>{{comments.length}} Comments</h3>
                 <mat-form-field appearance="outline" class="comment-input">
                     <mat-label>Comment</mat-label>
@@ -92,9 +92,11 @@
                         <mat-icon matListItemIcon>comment</mat-icon>
                         <span matListItemTitle>{{ comment.text }}</span>
                         <span matListItemSubtitle>by {{ comment.username }} on {{ comment.date | date:'short' }}</span>
+                        <!--
                         <button mat-icon-button (click)="deleteComment(comment)" matTooltip="Delete Comment">
                             <mat-icon>delete</mat-icon>
                         </button>
+                        -->
                     </mat-list-item>
                 </mat-list>
                 <div class="collection" *ngIf="collection && collection.parts.length > 0">
