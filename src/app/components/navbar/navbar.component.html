@@ -1,10 +1,20 @@
 <mat-toolbar>
     <mat-toolbar-row class="navbar">
-        <div>Movie App</div>
-        <div class="navOptions">
+        <div (click)="goTo('home')" class="title">
+            Movie App
+        </div>
+        <div class="navOptions" *ngIf="!isSmallScreen">
             <div class="navLink" (click)="goTo('profile')">Profile</div>
             <div class="navLink" (click)="goTo('home')">Search</div>
             <button mat-raised-button (click)="logout()">Log Out</button>
         </div>
+        <div class="mobile-menu" *ngIf="isSmallScreen" (click)="toggleMobileMenu()">
+            <mat-icon>menu</mat-icon>
+        </div>
     </mat-toolbar-row>
 </mat-toolbar>
+<div class="mobile-menu-content" *ngIf="isMobileMenuOpen && isSmallScreen" >
+    <div class="navLink" (click)="toggleMobileMenu('profile')">Profile</div>
+    <div class="navLink" (click)="toggleMobileMenu('home')">Search</div>
+    <button mat-raised-button (click)="logout()">Log Out</button>
+</div>
