@@ -1,5 +1,12 @@
 <mat-card class="has-watched-container">
-    <h1 class="title">Watched Movies</h1>
+    <mat-card-header>
+        <mat-card-title>
+            <h1 class="has-watched-title">Have Watched</h1>
+        </mat-card-title>
+        <mat-card-subtitle *ngIf="!mappedMovies && mappedMovies.length < 0">
+            <p class="watchlist-subtitle">Your Watched list is empty</p>
+        </mat-card-subtitle>
+    </mat-card-header>
     <div class="mappedMovies" *ngIf="mappedMovies">
         <mat-card class="movie" id="{{movie.id}}" *ngFor="let movie of mappedMovies">
             <a class="removeLink" (click)="removeMovie(movie.id)">
